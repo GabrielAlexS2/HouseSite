@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+body { font-family: 'Inter', sans-serif; }
+
+/* Estilos do index.html */
+.glass-card {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos alternativos sólidos para loja.html */
+.glass-card-solid {
+  background: rgba(22, 27, 34, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(48, 54, 61, 0.5);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #0097b2, #fb9203);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-grid {
+  background-image: radial-gradient(circle at 2px 2px, rgba(0, 151, 178, 0.1) 1px, transparent 0);
+  background-size: 32px 32px;
+}
+
+.bg-grid-lines {
+  background-image: linear-gradient(to right, rgba(48, 54, 61, 0.1) 1px, transparent 1px), 
+                    linear-gradient(to bottom, rgba(48, 54, 61, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.mesh-gradient {
+  background: radial-gradient(circle at 50% 50%, rgba(0, 151, 178, 0.15) 0%, transparent 70%);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wireframe-mesh {
+  background-image: linear-gradient(rgba(0, 151, 178, 0.1) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 151, 178, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+  perspective: 500px;
+  transform: rotateX(60deg);
+}
+
+.product-card { 
+  transition: all 0.3s ease; 
+}
+
+.product-card:hover { 
+  transform: translateY(-5px); 
+  box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3); 
+  border-color: rgba(59, 130, 246, 0.4); 
+}
+
+/* Animação Marquee (Scrool Horizontal para ONGs e Voluntários) */
+.marquee-container {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  gap: 2rem;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-content {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-around;
+  gap: 2rem;
+  padding-left: 2rem;
+  min-width: 100%;
+  animation: scroll-marquee 20s linear infinite;
+}
+
+@keyframes scroll-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - 2rem)); }
+}
+
+.marquee-container:hover .marquee-content {
+  animation-play-state: paused;
+}

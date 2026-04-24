@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>House JS - Comunidade de Desenvolvedores JavaScript</title>
+<!-- Tailwind CSS v3 CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script src="tailwind-config.js"></script>
+<!-- Custom Styles -->
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-brand-bg text-brand-textMain font-sans overflow-hidden">
+<!-- INÍCIO: Preloader Inspirado no Protótipo Visual -->
+<div id="preloader" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-brand-bg transition-opacity duration-1000 ease-in-out">
+  <p class="text-[0.6rem] md:text-sm tracking-[0.3em] font-mono text-brand-textSecondary uppercase mb-6 opacity-70">HouseJS Comunidade</p>
+  <div class="font-mono text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold flex flex-wrap items-center justify-center gap-1 w-full text-center px-4">
+    <span class="text-brand-secondary">{</span>
+    <span class="text-brand-primary break-words">Hello World!</span>
+    <span class="text-brand-secondary">}</span>
+  </div>
+  <div class="h-[2px] w-48 md:w-64 bg-brand-primary/20 mt-8 relative overflow-hidden">
+    <div class="absolute inset-0 bg-brand-primary w-full shadow-[0_0_15px_#0097b2] preloader-shimmer"></div>
+  </div>
+</div>
+<style>
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.preloader-shimmer {
+  animation: shimmer 1.5s infinite ease-in-out;
+}
+</style>
+<!-- FIM: Preloader -->
+<!-- INÍCIO: Cabeçalho Principal -->
+<header class="fixed top-0 left-0 w-full z-50 glass-card px-4 py-3 flex justify-center transition-all">
+<div class="w-full max-w-7xl flex items-center justify-between">
+<div class="flex items-center gap-2">
+<img src="./img/logo.png" alt="House JS Logo" class="h-8 w-auto sm:h-10 object-contain">
+
+<span class="font-bold text-lg tracking-tight">HOUSE<span class="text-brand-primary">.JS</span></span>
+</div>
+<!-- Menu Desktop -->
+<nav class="hidden md:flex items-center gap-6 text-sm font-medium text-brand-textSecondary mt-2 md:mt-0">
+  <a href="#home" class="nav-spy hover:text-brand-primary transition-colors">Home</a>
+  <a href="#about" class="nav-spy hover:text-brand-primary transition-colors">Comunidade</a>
+  <a href="#events" class="nav-spy hover:text-brand-primary transition-colors">Eventos</a>
+  <a href="#stacks" class="nav-spy hover:text-brand-primary transition-colors">Stacks</a>
+  <a href="#projects" class="nav-spy hover:text-brand-primary transition-colors">Projetos</a>
+  <a href="#" class="nav-spy hover:text-brand-primary transition-colors cursor-not-allowed text-brand-textSecondary/50 font-medium" title="Em Breve">Login</a>
+  <a href="loja.html" class="px-4 py-2 bg-white/5 hover:bg-brand-primary/20 border border-white/10 hover:border-brand-primary/50 text-brand-primary font-bold rounded-lg transition-all shadow-[0_0_10px_rgba(59,130,246,0.1)] flex items-center justify-center text-center">Loja</a>
+</nav>
+
+<!-- Botão do Menu Mobile -->
+<button class="p-2 text-brand-textMain md:hidden" id="menu-toggle">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6h16M4 12h16m-7 6h7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</header>
+<!-- FIM: Cabeçalho Principal -->
+
+<!-- INÍCIO: Menu Mobile (Overlay Independente) -->
+<div id="mobile-menu" class="fixed inset-0 z-[100] bg-brand-bg/98 backdrop-blur-2xl flex flex-col pt-20 px-8 transition-transform duration-300 translate-x-full md:hidden">
+  <button id="close-menu" class="absolute top-5 right-5 p-2 bg-white/5 border border-white/10 rounded-lg text-brand-textSecondary hover:text-white hover:bg-white/10 transition-all">
+    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+  </button>
+  
+  <div class="flex items-center gap-2 mb-12">
+    <img src="./img/logo.png" alt="House JS Logo" class="h-10 w-auto object-contain">
+    <span class="font-bold text-xl tracking-tight text-white">HOUSE<span class="text-brand-primary">.JS</span></span>
+  </div>
+
+  <nav class="flex flex-col gap-6 text-xl font-bold tracking-tight w-full">
+    <a href="#home" class="nav-spy mobile-link text-brand-textMain hover:text-brand-primary border-b border-white/5 pb-4 transition-colors">Home</a>
+    <a href="#about" class="nav-spy mobile-link text-brand-textMain hover:text-brand-primary border-b border-white/5 pb-4 transition-colors">Comunidade</a>
+    <a href="#events" class="nav-spy mobile-link text-brand-textMain hover:text-brand-primary border-b border-white/5 pb-4 transition-colors">Eventos</a>
+    <a href="#stacks" class="nav-spy mobile-link text-brand-textMain hover:text-brand-primary border-b border-white/5 pb-4 transition-colors">Stacks</a>
+    <a href="#projects" class="nav-spy mobile-link text-brand-textMain hover:text-brand-primary border-b border-white/5 pb-4 transition-colors">Projetos</a>
+    <a href="#" class="nav-spy mobile-link text-brand-textSecondary/50 cursor-not-allowed border-b border-white/5 pb-4 transition-colors" title="Em Breve">Login (Em Breve)</a>
+    
+    <div class="pt-4">
+      <a href="loja.html" class="mobile-link flex w-full items-center justify-center gap-3 bg-brand-primary/10 border border-brand-primary/30 text-brand-primary py-4 rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+        Acessar a Loja Oficial
+      </a>
+    </div>
+  </nav>
+</div>
+<!-- FIM: Menu Mobile -->
+<!-- INÍCIO: Seção Hero -->
+<section id="home" class="relative min-h-screen flex items-center px-6 pt-24 pb-16 bg-grid overflow-hidden">
+<!-- Elementos de Brilho no Fundo -->
+<div class="absolute top-1/4 left-0 w-[500px] h-[500px] bg-brand-primary/10 blur-[120px] -z-10 animate-glow-pulse"></div>
+<div class="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-brand-secondary/10 blur-[120px] -z-10 animate-glow-pulse" style="animation-delay: 2s;"></div>
+<div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
+<!-- Coluna Esquerda: Conteúdo -->
+<div class="space-y-8 text-center lg:text-left z-10 flex flex-col items-center lg:items-start">
+<span class="inline-block py-1 px-3 rounded-full bg-brand-primary/10 border border-brand-primary/30 text-brand-primary text-xs font-mono font-bold tracking-widest uppercase">
+        COMUNIDADE DE DESENVOLVEDORES
+      </span>
+<h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight">
+        A MAIOR COMUNIDADE DEV: <span class="text-gradient">HOUSE JS</span>
+</h1>
+<p class="text-brand-textSecondary text-lg lg:text-xl max-w-xl leading-relaxed">
+        A <strong class="text-brand-textMain">House JS</strong> é uma comunidade de desenvolvedores voltada para acelerar carreiras usando aprendizado colaborativo, criação de grandes projetos open source e um networking de extremo valor no ecossistema tech.
+      </p>
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="bg-brand-primary hover:bg-blue-600 transition-all py-4 px-10 rounded-xl font-bold text-center shadow-lg shadow-brand-primary/20 hover:scale-105 active:scale-95 flex justify-center items-center">
+          Participar da Comunidade
+        </button>
+<button class="border border-brand-textSecondary/30 hover:bg-white/5 transition-all py-4 px-10 rounded-xl font-bold text-center hover:scale-105 active:scale-95 flex justify-center items-center">
+          Explorar Conteúdos
+        </button>
+</div>
+<div class="flex flex-wrap gap-3 pt-6">
+<span class="px-4 py-1.5 bg-brand-card border border-white/10 rounded-full text-xs font-mono text-brand-textSecondary">#JavaScript</span>
+<span class="px-4 py-1.5 bg-brand-card border border-white/10 rounded-full text-xs font-mono text-brand-textSecondary">#Node.js</span>
+<span class="px-4 py-1.5 bg-brand-card border border-white/10 rounded-full text-xs font-mono text-brand-textSecondary">#React</span>
+<span class="px-4 py-1.5 bg-brand-card border border-white/10 rounded-full text-xs font-mono text-brand-textSecondary">#OpenSource</span>
+</div>
+</div>
+<!-- Coluna Direita: Visual -->
+<div class="absolute inset-0 z-0 flex justify-center items-center opacity-20 lg:opacity-100 lg:relative lg:inset-auto lg:z-auto pointer-events-none lg:pointer-events-auto py-20 lg:py-0">
+<!-- Fundo de Malha Aramada -->
+<div class="absolute inset-0 wireframe-mesh opacity-20 -z-10"></div>
+<!-- Recipiente Visual Tecnológico -->
+<div class="relative w-72 h-72 sm:w-96 sm:h-96 flex items-center justify-center animate-float">
+<!-- Anéis tecnológicos rotativos -->
+<div class="absolute inset-0 border-2 border-dashed border-brand-primary/20 rounded-full animate-spin-slow"></div>
+<div class="absolute inset-8 border border-brand-secondary/20 rounded-full animate-reverse-spin-slow"></div>
+<div class="absolute inset-16 border border-brand-primary/30 rounded-full opacity-50"></div>
+<!-- Núcleo de Brilho -->
+<div class="absolute inset-1/4 bg-brand-primary/20 blur-[60px] rounded-full animate-pulse"></div>
+<!-- Logo Principal -->
+<div class="relative z-20 w-full h-full flex items-center justify-center p-4">
+
+<div class="absolute -left-[25%] md:-left-[50%] top-1/2 -translate-y-1/2 w-[150%] h-[150%] md:w-[200%] md:h-[200%] pointer-events-none -z-10">
+    <img src="./img/logo_house.js.png" alt="House JS Logo" class="h-full w-auto object-contain opacity-50 mix-blend-screen">
+    <div class="absolute inset-0 bg-gradient-to-r from-brand-bg via-brand-bg/50 to-transparent"></div>
+</div>
+
+
+</div>
+<!-- Partículas simuladas -->
+<div class="absolute top-0 right-0 w-3 h-3 bg-brand-primary rounded-full blur-[2px] animate-pulse"></div>
+<div class="absolute bottom-1/4 left-0 w-2 h-2 bg-brand-secondary rounded-full blur-[1px] animate-pulse" style="animation-delay: 1s;"></div>
+<div class="absolute top-1/2 -right-8 w-1.5 h-1.5 bg-white rounded-full opacity-60 animate-glow-pulse"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- FIM: Seção Hero -->
+
+<!-- INÍCIO: Nova Seção (Scroll Animada) -->
+<section id="features-scroll" class="relative py-24 md:py-24 px-6 bg-brand-bg min-h-[140vh] md:min-h-[100vh] lg:min-h-screen flex md:items-center justify-center overflow-hidden">
+  <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start md:items-center mt-12 md:mt-0">
+    <!-- Esquerda: Imagem -->
+    <div class="flex justify-center lg:justify-start features-img opacity-0">
+      <img src="./img/logo_house.js.png" alt="House JS Logo" class="w-full max-w-lg object-contain drop-shadow-[0_0_40px_rgba(59,130,246,0.3)]">
+    </div>
+    
+    <!-- Direita: 3 Cards -->
+    <div class="flex flex-col gap-4 md:gap-6 features-cards mt-8 md:mt-0 relative z-20">
+      <div class="glass-card p-5 md:p-6 rounded-2xl border-l-4 border-brand-primary opacity-0 card-item relative overflow-hidden group">
+        <div class="absolute inset-0 bg-brand-primary/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out"></div>
+        <h3 class="text-lg md:text-xl font-bold mb-2 text-white relative z-10">Aprenda a Stack JavaScript na Prática</h3>
+        <p class="text-brand-textSecondary text-sm md:text-base relative z-10">A <strong>House JS</strong> te impulsiona do zero ao nível avançado. Do front-end ao back-end focando na linguagem que move a web moderna.</p>
+      </div>
+      
+      <div class="glass-card p-5 md:p-6 rounded-2xl border-l-4 border-brand-secondary opacity-0 card-item relative overflow-hidden group">
+        <div class="absolute inset-0 bg-brand-secondary/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out"></div>
+        <h3 class="text-lg md:text-xl font-bold mb-2 text-white relative z-10">Networking Imbatível na House JS</h3>
+        <p class="text-brand-textSecondary text-sm md:text-base relative z-10">Faça conexões que importam. Nossa comunidade te coloca lado a lado com grandes talentos, ampliando significativamente o seu alcance e networking no mercado.</p>
+      </div>
+      
+      <div class="glass-card p-5 md:p-6 rounded-2xl border-l-4 border-purple-500 opacity-0 card-item relative overflow-hidden group">
+        <div class="absolute inset-0 bg-purple-500/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out"></div>
+        <h3 class="text-lg md:text-xl font-bold mb-2 text-white relative z-10">Projetos Open Source Reais</h3>
+        <p class="text-brand-textSecondary text-sm md:text-base relative z-10">A teoria de nada serve sem a prática. Na <strong>House JS</strong> você atuará junto a times construindo aplicações para consolidar um portfólio técnico fortíssimo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- FIM: Nova Seção -->
+
+<!-- INÍCIO: Seção Robô Interativo -->
+<section id="robo-section" class="relative bg-brand-bg min-h-[100vh] flex items-center justify-center overflow-hidden robot-scroll-section">
+  <div class="absolute inset-0 z-0 flex items-start justify-center">
+    <!-- O vídeo substituirá o canvas, usando dimensões similares para manter o padrão visual e rolagem -->
+    <video id="robo-video" src="./vid/House_KF.mp4" muted playsinline preload="auto" class="w-full md:w-[120%] h-auto min-h-[150vh] xl:min-h-[220vh] object-cover opacity-100"></video>
+  </div>
+  <!-- Central Title (Some no decorrer do scroll) -->
+  <div id="robo-title" class="relative z-20 text-center w-full max-w-4xl mx-auto px-6 pointer-events-none mt-24">
+    <h2 class="text-3xl md:text-5xl lg:text-6xl font-black mb-4 tracking-tighter title-shadow text-brand-textMain">
+      UMA MÁQUINA DO FUTURO
+    </h2>
+    <p class="text-brand-textSecondary text-lg md:text-xl font-medium max-w-2xl mx-auto drop-shadow-lg">
+      Sistema construído em Javascript moderno preparado para revolucionar perfomance e UX global.
+    </p>
+  </div>
+
+  <!-- Frases ao redor do robô (Serão animadas pelo GSAP) -->
+  <div class="absolute inset-0 z-20 pointer-events-none max-w-[1400px] mx-auto w-full h-full" id="robo-texts-container">
+        
+        <!-- Esquerda 1 (Cabeça - Sensor) -->
+        <div class="robo-text-item absolute top-[10%] md:top-[15%] left-4 md:left-12 right-auto w-[75%] max-w-[220px] md:max-w-[320px] text-left opacity-0 p-4 md:p-5 bg-black/80 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_0_30px_rgba(59,130,246,0.15)] ring-1 ring-white/5 overflow-hidden group">
+          <div class="absolute top-0 left-0 w-1 h-full bg-brand-primary"></div>
+          <div class="absolute -inset-2 bg-brand-primary/10 blur-[20px] -z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <h4 class="text-white font-bold text-xs md:text-sm lg:text-base font-mono flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse shrink-0"></span>
+            SENSOR ÓPTICO
+          </h4>
+          <p class="text-white/70 text-[10px] sm:text-xs md:text-sm mt-2 md:mt-3 leading-relaxed">Visão de máquina de alta fidelidade processada em tempo real pela <b>Node.js</b>.</p>
+        </div>
+        
+        <!-- Direita 1 (Ombro/Braço - Articulação) -->
+        <div class="robo-text-item absolute top-[30%] md:top-[35%] right-4 md:right-12 left-auto w-[75%] max-w-[220px] md:max-w-[320px] text-right opacity-0 p-4 md:p-5 bg-black/80 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_0_30px_rgba(34,197,94,0.15)] ring-1 ring-white/5 overflow-hidden group">
+          <div class="absolute top-0 right-0 w-1 h-full bg-brand-secondary"></div>
+          <div class="absolute -inset-2 bg-brand-secondary/10 blur-[20px] -z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <h4 class="text-white font-bold text-xs md:text-sm lg:text-base font-mono flex items-center justify-end gap-2">
+            ARTICULAÇÃO 360
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-secondary animate-pulse shrink-0"></span>
+          </h4>
+          <p class="text-white/70 text-[10px] sm:text-xs md:text-sm mt-2 md:mt-3 leading-relaxed">Movimentos fluidos alimentados por interpolação de dados (<b>React State</b>).</p>
+        </div>
+
+        <!-- Esquerda 2 (Tronco/Core) -->
+        <div class="robo-text-item absolute top-[55%] md:top-[60%] left-4 md:left-12 right-auto w-[75%] max-w-[220px] md:max-w-[320px] text-left opacity-0 p-4 md:p-5 bg-black/80 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_0_30px_rgba(147,51,234,0.15)] ring-1 ring-white/5 overflow-hidden group">
+          <div class="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
+          <div class="absolute -inset-2 bg-purple-500/10 blur-[20px] -z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <h4 class="text-white font-bold text-xs md:text-sm lg:text-base font-mono flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse shrink-0"></span>
+            NÚCLEO JS
+          </h4>
+          <p class="text-white/70 text-[10px] sm:text-xs md:text-sm mt-2 md:mt-3 leading-relaxed">Processamento central ultraveloz operando Event Loops em <b>0.2ms</b>.</p>
+        </div>
+
+        <!-- Direita 2 (Pés/Base) -->
+        <div class="robo-text-item absolute top-[80%] md:top-[85%] right-4 md:right-12 left-auto w-[75%] max-w-[220px] md:max-w-[320px] text-right opacity-0 p-4 md:p-5 bg-black/80 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_0_30px_rgba(96,165,250,0.15)] ring-1 ring-white/5 overflow-hidden group">
+          <div class="absolute top-0 right-0 w-1 h-full bg-blue-400"></div>
+          <div class="absolute -inset-2 bg-blue-400/10 blur-[20px] -z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <h4 class="text-white font-bold text-xs md:text-sm lg:text-base font-mono flex items-center justify-end gap-2">
+            PROPULSOR WEB
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse shrink-0"></span>
+          </h4>
+          <p class="text-white/70 text-[10px] sm:text-xs md:text-sm mt-2 md:mt-3 leading-relaxed">Aceleração instantânea estruturando a base principal do ecossistema moderno.</p>
+        </div>
+        
+  </div>
+</section>
+<!-- FIM: Seção Robô Interativo -->
+
+<!-- INÍCIO: Seção Comunidade / Sobre -->
+<section class="relative z-20 py-20 px-6 bg-brand-bgSecondary" id="about">
+<div class="reveal max-w-7xl mx-auto">
+<h2 class="text-3xl lg:text-4xl font-bold mb-8 text-center md:text-left">O QUE FAZ A COMUNIDADE <span class="text-brand-primary">HOUSE JS?</span></h2>
+<div class="space-y-6 text-brand-textSecondary leading-relaxed">
+<p>
+        Na verdadeira essência, a <span class="text-brand-primary font-bold text-lg">Comunidade House JS</span> existe para transformar programadores comuns em desenvolvedores de alto impacto. Nós formamos um ecossistema sólido onde colaboração é o alicerce fundamental.
+      </p>
+<p>
+        A principal missão da <strong>House JS</strong> é eliminar as barreiras entre os devs que estão entrando e experientes arquitetos de software. Chegamos nesse elo através da imersão em <em>Open Source</em>, onde o mercado te recruta pelas suas entregas práticas em equipe.
+      </p>
+<div class="grid grid-cols-1 gap-4 pt-4">
+<div class="p-4 rounded-lg bg-brand-card border-l-4 border-brand-primary">
+<h4 class="text-brand-textMain font-bold mb-1">Knowledge Sharing</h4>
+<p class="text-sm">Aprenda com quem faz e ensine o que você domina.</p>
+</div>
+<div class="p-4 rounded-lg bg-brand-card border-l-4 border-brand-secondary">
+<h4 class="text-brand-textMain font-bold mb-1">Collaborative Projects</h4>
+<p class="text-sm">Participe de iniciativas open source reais da comunidade.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FIM: Seção Comunidade / Sobre -->
+
+<!-- INÍCIO: Seção Membros Voluntários -->
+<section class="py-16 px-6 bg-brand-bg relative overflow-hidden" id="members">
+<div class="reveal max-w-7xl mx-auto text-center mb-12">
+<h2 class="text-2xl md:text-3xl font-bold">NOSSOS <span class="text-brand-primary">VOLUNTÁRIOS</span></h2>
+<p class="text-brand-textSecondary text-sm md:text-base mt-2">Pessoas incríveis que fazem a comunidade House JS acontecer diariamente.</p>
+</div>
+<div class="marquee-container" id="membros-marquee">
+<!-- Renderizado via JS -->
+</div>
+</section>
+<!-- FIM: Seção Membros Voluntários -->
+<!-- INÍCIO: Seção de Eventos -->
+<section class="relative py-20 px-6 overflow-hidden" id="events">
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none"></div>
+<div class="reveal relative z-10 max-w-7xl mx-auto">
+<h2 class="text-3xl lg:text-4xl font-bold mb-10 text-center">EVENTOS E <span class="text-brand-secondary">ENCONTROS</span></h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="glass-card p-6 rounded-2xl group transition-all duration-300 hover:border-brand-primary/50">
+<div class="w-12 h-12 bg-brand-primary/20 rounded-lg flex items-center justify-center mb-4 text-brand-primary">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 005.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-xl font-bold mb-2">Meetups Mensais</h3>
+<p class="text-brand-textSecondary text-sm mb-4">Networking e trocas de experiências presenciais e online.</p>
+<span class="text-brand-primary font-bold text-xs uppercase tracking-widest">Próximo: 15 de Out</span>
+</div>
+<div class="glass-card p-6 rounded-2xl group transition-all duration-300 hover:border-brand-secondary/50">
+<div class="w-12 h-12 bg-brand-secondary/20 rounded-lg flex items-center justify-center mb-4 text-brand-secondary">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-xl font-bold mb-2">Hackathons</h3>
+<p class="text-brand-textSecondary text-sm mb-4">Maratonas de programação para resolver desafios reais.</p>
+<span class="text-brand-secondary font-bold text-xs uppercase tracking-widest">Inscrições em Breve</span>
+</div>
+<div class="glass-card p-6 rounded-2xl">
+<div class="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center mb-4 text-white">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-xl font-bold mb-2">Workshops &amp; Palestras</h3>
+<p class="text-brand-textSecondary text-sm mb-4">Aprenda novas ferramentas com especialistas do mercado.</p>
+<span class="text-brand-textSecondary font-bold text-xs uppercase tracking-widest">Semanal</span>
+</div>
+</div>
+</div>
+</section>
+<!-- FIM: Seção de Eventos -->
+<!-- INÍCIO: Seção de Stacks / Tecnologias -->
+<section class="py-20 px-6 bg-brand-bgSecondary" id="stacks">
+<div class="reveal max-w-7xl mx-auto">
+<h2 class="text-3xl lg:text-4xl font-bold mb-10 text-center">STACKS EM <span class="text-gradient">FOCO</span></h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<a href="#community-resources" title="Ver Cursos Relacionados" class="bg-brand-card p-6 rounded-xl border border-white/5 flex flex-col items-center gap-3 transition-transform hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+<div class="text-yellow-400 font-bold text-2xl font-mono">JS</div>
+<span class="text-xs font-medium">JavaScript</span>
+</a>
+<a href="#community-resources" title="Ver Cursos Relacionados" class="bg-brand-card p-6 rounded-xl border border-white/5 flex flex-col items-center gap-3 transition-transform hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(34,197,94,0.2)]">
+<div class="text-green-500 font-bold text-2xl font-mono">Node</div>
+<span class="text-xs font-medium">Node.js</span>
+</a>
+<a href="#community-resources" title="Ver Cursos Relacionados" class="bg-brand-card p-6 rounded-xl border border-white/5 flex flex-col items-center gap-3 transition-transform hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(96,165,250,0.2)]">
+<div class="text-blue-400 font-bold text-2xl font-mono">React</div>
+<span class="text-xs font-medium">React / Next</span>
+</a>
+<a href="#community-resources" title="Ver Cursos Relacionados" class="bg-brand-card p-6 rounded-xl border border-white/5 flex flex-col items-center gap-3 transition-transform hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+<div class="text-blue-600 font-bold text-2xl font-mono">TS</div>
+<span class="text-xs font-medium">TypeScript</span>
+</a>
+</div>
+</div>
+</section>
+<!-- FIM: Seção de Stacks / Tecnologias -->
+<!-- INÍCIO: Seção de Projetos da Comunidade -->
+<section class="py-24 px-6 relative overflow-hidden" id="projects">
+<div class="absolute inset-0 bg-gradient-to-b from-brand-bgSecondary to-brand-bg opacity-50 z-0 pointer-events-none"></div>
+<div class="reveal relative z-10 max-w-7xl mx-auto">
+<div class="text-center mb-16">
+<h2 class="text-3xl lg:text-4xl font-black mb-4 tracking-tight uppercase">Atividades e <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-secondary">Projetos</span></h2>
+<p class="text-brand-textSecondary max-w-2xl mx-auto text-base md:text-lg">Iniciativas práticas, eventos, conteúdo e ferramentas criadas para acelerar sua carreira.</p>
+</div>
+<div id="projetos-dinamicos" class="flex flex-col gap-12"></div>
+</div>
+</section>
+<!-- FIM: Seção de Projetos da Comunidade -->
+
+<!-- INÍCIO: Seção de ONGs Parceiras -->
+<section class="py-20 px-6 bg-brand-bgSecondary border-y border-white/5 overflow-hidden" id="ongs">
+<div class="reveal max-w-7xl mx-auto text-center mb-10">
+<h2 class="text-2xl md:text-3xl font-bold tracking-tight"><span class="text-brand-secondary">ONGs</span> PARCEIRAS</h2>
+<p class="text-brand-textSecondary text-sm mt-2 max-w-xl mx-auto">Trabalhamos em conjunto para apoiar organizações sem fins lucrativos desenvolvendo softwares inovadores enquanto os membros ganham experiência prática.</p>
+</div>
+<div class="marquee-container" id="ongs-marquee">
+<!-- Renderizado via JS -->
+</div>
+</section>
+<!-- FIM: Seção de ONGs Parceiras -->
+<!-- INÍCIO: Vagas, Cursos e Depoimentos -->
+<section class="py-24 px-6 relative overflow-hidden" id="community-resources">
+  <div class="absolute inset-0 bg-gradient-to-r from-brand-primary/5 to-brand-secondary/5 opacity-50"></div>
+  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 reveal relative z-10">
+    <!-- Cursos Gratuitos -->
+    <div class="bg-brand-card p-8 rounded-3xl border border-white/5 hover:border-brand-primary/30 transition-colors">
+      <h2 class="text-2xl lg:text-3xl font-bold mb-4 flex items-center gap-3">
+        <svg class="w-8 h-8 text-brand-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+        CURSOS BÁSICOS
+      </h2>
+      <p class="text-brand-textSecondary mb-8 text-sm leading-relaxed">Mural atualizado pela comunidade com excelentes recursos gratuitos para introdução no desenvolvimento web.</p>
+      <div id="cursos-lista" class="flex flex-col gap-3"></div>
+      <a href="https://github.com" target="_blank" class="mt-6 flex w-full items-center justify-center py-4 border border-dashed border-white/20 hover:border-brand-primary text-brand-textSecondary hover:text-white rounded-xl transition-all text-sm font-bold bg-white/5">
+        Sugerir Links via Fork/PR no GitHub
+      </a>
+    </div>
+    
+    <!-- Depoimentos -->
+    <div>
+      <h2 class="text-2xl lg:text-3xl font-bold mb-4 flex items-center gap-3">
+        <svg class="w-8 h-8 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+        IMPACTO GERADO
+      </h2>
+      <p class="text-brand-textSecondary mb-8 text-sm leading-relaxed">Veja os resultados diretos do engajamento com nossa rede presencial e online pelo Brasil inteiro.</p>
+      <div id="depoimentos-dinamicos" class="flex flex-col gap-6"></div>
+    </div>
+  </div>
+</section>
+<!-- FIM: Vagas, Cursos e Depoimentos -->
+
+<!-- INÍCIO: Seção de Contato & Patrocínio -->
+<section class="py-24 px-6 relative bg-brand-bgSecondary" id="contact">
+  <div class="reveal max-w-5xl mx-auto glass-card border border-brand-primary/20 p-8 md:p-14 rounded-[2.5rem] shadow-[0_0_50px_rgba(59,130,246,0.1)] relative overflow-hidden">
+    <!-- Efeitos decorativos de luz na Div -->
+    <div class="absolute -top-32 -right-32 w-96 h-96 bg-brand-primary/20 blur-[100px] rounded-full pointer-events-none z-0"></div>
+    <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-brand-secondary/20 blur-[100px] rounded-full pointer-events-none z-0"></div>
+    
+    <div class="text-center mb-12 relative z-10">
+      <h2 class="text-3xl lg:text-5xl font-black mb-4 tracking-tight"><span class="text-brand-primary">PATROCINE</span> A HOUSE JS</h2>
+      <p class="text-brand-textSecondary text-lg max-w-2xl mx-auto">Quer exibir sua marca na maior comunidade JS em ascensão? Entre em contato e conheça os dados em nosso Mídia Kit Oficial.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-stretch relative z-10">
+      <a href="#" target="_blank" class="flex flex-col justify-center items-center p-8 bg-gradient-to-br from-brand-bg to-brand-bgSecondary rounded-3xl border border-white/10 hover:border-brand-primary/50 transition-all group text-center shadow-lg hover:shadow-brand-primary/20">
+        <div class="w-20 h-20 rounded-2xl bg-brand-primary/20 flex items-center justify-center mb-6 text-brand-primary group-hover:scale-110 transition-transform duration-500">
+           <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        </div>
+        <span class="font-bold text-xl text-white group-hover:text-brand-primary transition-colors mb-2 text-center">Acessar Plano Anual e Mídia Kit Completo</span>
+        <span class="text-sm text-brand-textSecondary mt-2 text-center">Acesse os relatórios e os grandes números e dados mencionados em nossos eventos para analisar o retorno de marca.</span>
+      </a>
+      
+      <form action="mailto:contato.housejs@gmail.com" method="GET" enctype="text/plain" class="flex flex-col gap-5 justify-center">
+        <div>
+          <label class="text-xs font-bold text-brand-textSecondary uppercase tracking-widest pl-1 mb-2 block">Empresa ou Solicitante</label>
+          <input type="text" name="subject" required class="w-full bg-brand-bg/50 border border-white/10 focus:border-brand-primary focus:bg-brand-bg focus:ring-1 focus:ring-brand-primary rounded-2xl px-5 py-4 text-white outline-none transition-all placeholder-white/20 font-medium" placeholder="Ex: Contato Empresa Parceira">
+        </div>
+        <div>
+          <label class="text-xs font-bold text-brand-textSecondary uppercase tracking-widest pl-1 mb-2 block">Mensagem</label>
+          <textarea name="body" required rows="4" class="w-full bg-brand-bg/50 border border-white/10 focus:border-brand-primary focus:bg-brand-bg focus:ring-1 focus:ring-brand-primary rounded-2xl px-5 py-4 text-white outline-none transition-all resize-none placeholder-white/20 font-medium" placeholder="Queríamos discutir os detalhes de um patrocínio base...."></textarea>
+        </div>
+        <button type="submit" class="w-full bg-brand-primary hover:bg-blue-600 text-white font-black tracking-wide py-4 text-lg rounded-2xl transition-all text-center flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+          Abrir Aplicação de E-mail
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+<!-- FIM: Seção de Contato & Patrocínio -->
+
+<!-- INÍCIO: Espaço para Anúncios (Sponsors / Monetização) -->
+<section class="py-12 px-6 bg-brand-bgSecondary border-t border-white/5 relative z-20">
+  <div class="max-w-4xl mx-auto">
+    <div class="flex flex-col items-center bg-black/40 border border-white/10 rounded-2xl p-8 text-center shadow-[0_0_30px_rgba(251,146,3,0.05)] border-t border-t-brand-secondary/30 relative">
+      <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-bgSecondary px-3 text-xs tracking-widest text-brand-textSecondary font-bold uppercase ring-1 ring-white/10 rounded-full bg-clip-padding">Espaço Publicitário</span>
+      <p class="text-brand-textSecondary text-sm md:text-base mt-2 mb-6">Apoie a continuidade dos eventos e servidores da comunidade e impulsione sua marca.</p>
+      <a href="#contact" class="inline-flex px-8 py-3 rounded-xl bg-white/5 hover:bg-brand-secondary/20 text-brand-secondary border border-transparent hover:border-brand-secondary/50 transition-colors font-bold text-sm shadow-md">
+        Anuncie Aqui (Entre em Contato)
+      </a>
+    </div>
+  </div>
+</section>
+<!-- FIM: Espaço para Anúncios -->
+
+<!-- INÍCIO: Chamada para Ação Final -->
+<section class="py-20 px-6 border-t border-brand-primary/10 relative overflow-hidden bg-brand-bg text-center">
+  <div class="absolute inset-0 bg-gradient-to-tr from-brand-primary/5 via-brand-bg to-brand-secondary/5 pointer-events-none"></div>
+  <div class="reveal max-w-4xl mx-auto flex flex-col items-center justify-center gap-8 relative z-10">
+    <h2 class="text-3xl lg:text-5xl font-black text-white px-2 leading-tight">VOCÊ ESTÁ PRONTO PARA A NOSSA <br class="hidden md:block"> <span class="text-brand-primary">EXPERIÊNCIA?</span></h2>
+    <p class="text-brand-textSecondary text-base md:text-lg max-w-2xl px-4">Torne-se um desenvolvedor influente acessando nosso grupo gratuito do WhatsApp/Discord.</p>
+    <button class="flex items-center justify-center text-center w-full sm:w-auto bg-white text-brand-bg font-black tracking-widest uppercase text-sm md:text-base py-5 px-12 rounded-2xl shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:scale-105 transition-all outline-none mt-2">
+      Entrar na House JS Oficial
+    </button>
+  </div>
+</section>
+<!-- FIM: Chamada para Ação Final -->
+<!-- INÍCIO: Rodapé Principal -->
+<footer class="bg-brand-bgSecondary py-12 px-6 border-t border-white/5">
+<div class="max-w-7xl mx-auto w-full flex flex-col items-center gap-8">
+<div class="flex flex-col items-center gap-4">
+<img src="./img/logo.png" alt="House JS Logo" class="h-8 w-auto sm:h-10 object-contain">
+<div class="text-center">
+<span class="font-bold text-xl tracking-tight">HOUSE<span class="text-brand-primary">.JS</span></span>
+<p class="text-brand-textSecondary text-xs mt-1">Comunidade de Desenvolvedores JavaScript</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-x-12 gap-y-4 text-sm text-brand-textSecondary">
+<a class="hover:text-brand-primary transition-colors" href="index.html#about">Comunidade</a>
+<a class="hover:text-brand-primary transition-colors" href="index.html#projects">Projetos</a>
+<a class="hover:text-brand-primary transition-colors" href="index.html#events">Eventos</a>
+<a class="hover:text-brand-primary transition-colors" href="#">Contato</a>
+<a class="hover:text-brand-primary transition-colors" href="#">Discord</a>
+<a class="hover:text-brand-primary transition-colors" href="#">GitHub</a>
+</div>
+<div class="flex gap-6 pt-6">
+<div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-primary transition-all">
+<svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</div>
+<div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-secondary transition-all">
+<svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
+</div>
+</div>
+<p class="text-[10px] text-brand-textSecondary mt-10">© 2023 House JS Comunidade. Todos os direitos reservados.</p>
+</div>
+</footer>
+<!-- FIM: Rodapé Principal -->
+<!-- INÍCIO: Scripts Compartilhados -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="scripts.js"></script>
+<!-- FIM: Scripts Compartilhados -->
+</body></html>
